@@ -1,0 +1,23 @@
+.user-card {
+    text-align: center;
+  }
+  
+  .user-image {
+    width: 150px;
+    height: 150px;
+    margin-top: -75px; /* Center the circular image in the card */
+  }
+  
+  .user-info-card {
+    padding: 20px;
+  }
+  
+  .info-label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .info-text {
+    margin-bottom: 1.5rem;
+  }
+  

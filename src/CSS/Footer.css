@@ -1,0 +1,33 @@
+.site-footer {
+    background-color: #333;
+    color: #fff;
+    padding: 50px 0;
+  }
+  
+  .site-footer h3 {
+    color: #fff;
+  }
+  
+  .site-footer p {
+    color: #ccc;
+  }
+  
+  .social-icons {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .social-icons li {
+    display: inline;
+    margin: 0 10px;
+  }
+  
+  .social-icons a {
+    color: #fff;
+    font-size: 24px;
+  }
+  
+  .social-icons a:hover {
+    color: #55acee;
+  }
+  
