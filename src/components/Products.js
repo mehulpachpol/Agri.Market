@@ -22,7 +22,7 @@ const Products = () => {
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true);
-      const response = await fetch("http://localhost:8001/users");
+      const response = await fetch("http://localhost:8080/product/all");
       if (componentMounted) {
         setData(await response.clone().json());
         setFilter(await response.json());
@@ -130,6 +130,18 @@ const Products = () => {
           <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("jewelery")}>Jewelery</button>
           <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("electronics")}>Electronics</button>
         </div> */}
+{/* 
+[
+  {
+    "id": 0,
+    "productName": "string",
+    "description": "string",
+    "price": 0,
+    "stockQuantity": 0,
+    "imgURL": "string",
+    "dateAdded": "2024-02-10"
+  }
+] */}
 
         {filter.map((product) => {
           return (
@@ -138,13 +150,13 @@ const Products = () => {
               {/* style={{boxShadow: "5px 5px rgba(0, 0, 0, 0.4)"}} */}
                 <img
                   className="card-img-top p-3"
-                  src={product.image}
+                  src={product.imgURL}
                   alt="Card"
                   height={300}
                 />
                 <div className="card-body">
                   <h5 className="card-title">
-                    {product.title.substring(0, 12)}...
+                    {product.productName.substring(0, 12)}...
                   </h5>
                   <p className="card-text">
                     {product.description.substring(0, 90)}...

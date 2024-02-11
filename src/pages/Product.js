@@ -24,10 +24,11 @@ const Product = () => {
     const getProduct = async () => {
       setLoading(true);
       setLoading2(true);
-      const response = await fetch(`https://localhost:8001/users/${id}`);
+      // const response = await fetch(`https://localhost:8001/users/${id}`);
+      const response = await fetch(`http://localhost:8080/product/all/${id}`);
       const data = await response.json();
       setProduct(data);
-      console.log(product);
+      console.log(data);
       
       setLoading(false);
       const response2 = await fetch(

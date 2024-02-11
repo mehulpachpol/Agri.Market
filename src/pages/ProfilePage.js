@@ -1,5 +1,5 @@
 
-import {React , useState} from 'react';
+import {React , useState , useEffect} from 'react';
 import { Container, Row, Col, Card, Image, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom'
 import backgroundImage from '../images/ferti.jpeg'; // Replace with the actual path to your default image
@@ -31,6 +31,23 @@ import UpdateProfileModal from '../components/UpdateProfileModal';
 export const ProfilePage = ()=> {
 
   const [orderSlide , setOrderSlide] = useState(true);
+  const [profileData, setProfileData] = useState({
+    userName: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    phoneNo: '',
+    dob: '',
+    address: {
+      streetAddress: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: '',
+    },
+  });
+
+
 
   const orderHistory = [
     {
@@ -68,6 +85,45 @@ export const ProfilePage = ()=> {
     setOrderSlide(!orderSlide);
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        //make it useful for the particular user id
+        // const response = await fetch("http://localhost:8080/customer/all/{id}");
+
+        const response = await fetch("http://localhost:8080/customer/all/1");
+        const data = await response.json();
+        console.log(data);
+        setProfileData(data);
+        console.log(profileData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       //make it useful for the particular user id
+  //       // const response = await fetch("http://localhost:8080/customer/all/{id}");
+
+  //       const response = await fetch("http://localhost:8080/customer/all/1");
+  //       const data = await response.json();
+  //       console.log(data);
+  //       setProfileData(data);
+  //       console.log(profileData);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+  
+  //   fetchData();
+  // }, [profileUpdated]);
+  
+
   return (
     <>
     <Navbar/>
@@ -101,7 +157,7 @@ export const ProfilePage = ()=> {
               className="user-image"
             />
             <Card.Body>
-              <Card.Title>Rajesh Patil</Card.Title>
+              <Card.Title>{profileData.firstName} {profileData.lastName}</Card.Title>
               <hr style={{ color: '#06d47b', border: 'solid', borderWidth: '2px', opacity: '0.7' }} />
 
               <Card.Text className="text-muted">Farmer</Card.Text>
@@ -115,25 +171,25 @@ export const ProfilePage = ()=> {
               <Row>
                 <Col md={6}>
                   <p className="info-label">Address</p>
-                  <p className="info-text">Datala, Malkapur</p>
+                  <p className="info-text">{profileData.address.streetAddress} , {profileData.address.city}, {profileData.address.state}</p>
                   <hr style={{ color: '#06d47b', border: 'solid', borderWidth: '2px', opacity: '0.7' }} />
 
                 </Col>
                 <Col md={6}>
                   <p className="info-label">Email</p>
-                  <p className="info-text">Rajesh@example.com</p>
+                  <p className="info-text">{profileData.email}</p>
                 </Col>
               </Row>
               <Row>
                 <Col md={6}>
                   <p className="info-label">Phone</p>
-                  <p className="info-text">(02580)-123456</p>
+                  <p className="info-text">(+91)-{profileData.phoneNo}</p>
                   <hr style={{ color: '#06d47b', border: 'solid', borderWidth: '2px', opacity: '0.7' }} />
 
                 </Col>
                 <Col md={6}>
                   <p className="info-label">Mobile</p>
-                  <p className="info-text">09876554321</p>
+                  <p className="info-text">(+91)-{profileData.phoneNo}</p>
                 </Col>
               </Row>
               {/* Add more user information as needed */}

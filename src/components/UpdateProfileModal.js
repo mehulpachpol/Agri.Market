@@ -1,34 +1,106 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
 function UpdateProfileModal() {
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({
+    email: '',
     firstName: '',
     lastName: '',
-    streetName: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    phone: '',
-    email: '',
+    phoneNo: '',
+    address: {
+      streetAddress: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: '',
+    },
   });
+
+
+  // {
+  //   "userName": "Swaminathan",
+  //   "email": "Ms@gmail.com",
+  //   "firstName": "Murli",
+  //   "lastName": "Swaminathan",
+  //   "phoneNo": "9867564531",
+  //   "dob": "2024-02-10",
+  //   "address": {
+  //     "streetAddress": "LinkStreet",
+  //     "city": "Pune",
+  //     "state": "MH",
+  //     "zipCode": "411057",
+  //     "country": "India"
+  //   }
+  // }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    // If the changed field is part of the address, update it accordingly
+    if (name.includes("address.")) {
+      const addressField = name.split(".")[1];
+      setFormData((prevData) => ({
+        ...prevData,
+        address: {
+          ...prevData.address,
+          [addressField]: value,
+        },
+      }));
+    } else {
+      // Otherwise, update the field in the main form data
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleUpdate = () => {
-    // Update data logic goes here
-    console.log('Updated data:', formData);
-
+    const apiEndpoint = 'http://localhost:8080/customer/profileUpdate/1';
+    let a =9;
+  
+    // Prepare the request payload
+    const requestOptions = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData), // Send the updated form data
+    };
+  
+    // Make the API call
+    fetch(apiEndpoint, requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          console.log("Inside Not ok");
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        console.log('Response Status:', response.status);
+        return response.json();
+      })
+      .then(data => {
+        console.log('Profile updated successfully:', data);
+        // You can perform additional actions after a successful update if needed
+      })
+      .catch(error => {
+        console.error('Error updating profile:', error);
+        // Handle error scenarios
+      });
+  
     // Close modal
     setOpenModal(false);
+    console.log(formData);
+    setFormData(formData);
+    console.log(formData);
+    window.location.reload();
+  
+    // onUpdate(a+1);
+
+
   };
+
+ 
 
   return (
     <>
@@ -69,8 +141,8 @@ function UpdateProfileModal() {
               <Form.Control
                 type="text"
                 placeholder="Enter street name"
-                name="streetName"
-                value={formData.streetName}
+                name="address.streetAddress"
+                value={formData.address.streetAddress}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -80,8 +152,8 @@ function UpdateProfileModal() {
               <Form.Control
                 type="text"
                 placeholder="Enter city"
-                name="city"
-                value={formData.city}
+                name="address.city"
+                value={formData.address.city}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -91,8 +163,8 @@ function UpdateProfileModal() {
               <Form.Control
                 type="text"
                 placeholder="Enter state"
-                name="state"
-                value={formData.state}
+                name="address.state"
+                value={formData.address.state}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -102,8 +174,8 @@ function UpdateProfileModal() {
               <Form.Control
                 type="text"
                 placeholder="Enter zip code"
-                name="zipcode"
-                value={formData.zipcode}
+                name="address.zipCode"
+                value={formData.address.zipCode}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -113,8 +185,8 @@ function UpdateProfileModal() {
               <Form.Control
                 type="text"
                 placeholder="Enter phone number"
-                name="phone"
-                value={formData.phone}
+                name="phoneNo"
+                value={formData.phoneNo}
                 onChange={handleInputChange}
               />
             </Form.Group>
