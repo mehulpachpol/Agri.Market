@@ -274,7 +274,7 @@ import UpdateProductModal from '../components/UpdateProductModal';
                 <p className="info-label">Product Name : {order.productName}</p>
                 <p className="info-text">Category : {order.category}</p>
 
-                <p className="info-text">Price: ${order.price.toFixed(2)}</p>
+                <p className="info-text">Price: ₹{order.price.toFixed(2)}</p>
 
                 <p className="info-text">Description: {order.description}</p>
 

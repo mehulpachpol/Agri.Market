@@ -20,6 +20,43 @@ function UpdateProductModal() {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const apiEndpoint = 'http://localhost:8080/product/2';  
+      const requestOptions = {
+        method: 'PUT',  
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      };
+
+      const response = await fetch(apiEndpoint, requestOptions);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Data saved successfully:', data);
+
+      setFormData({
+        name: '',
+        description: '',
+        price: '',
+        stock: '',
+        category: '',
+        image: '',
+      });
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+  };
+
+
+
   const handleUpdate = () => {
     //update data
     console.log('Updated data:', formData);
@@ -39,7 +76,7 @@ function UpdateProductModal() {
           <Modal.Title>Update Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formName">
               <Form.Label>Name:</Form.Label>
               <Form.Control
@@ -94,9 +131,9 @@ function UpdateProductModal() {
                 onChange={handleInputChange}
               >
                 <option value="">Select category</option>
-                <option value="fertilizers">Fertilizers</option>
-                <option value="pesticide">Pesticide</option>
-                <option value="fungicide">Fungicide</option>
+                <option value="1">Fertilizers</option>
+                <option value="2">Pesticide</option>
+                <option value="3">Fungicide</option>
               </Form.Control>
             </Form.Group>
 

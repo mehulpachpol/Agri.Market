@@ -17,7 +17,49 @@ const Products = () => {
 
   const addProduct = (product) => {
     dispatch(addCart(product))
+    // console.log(product)
+
+    handleSubmit(product);
+
   }
+
+
+
+  const handleSubmit = async (product) => {
+    console.log("Inside Submit");
+    console.log(product.id);
+
+    try {
+      const apiEndpoint = `http://localhost:8080/cart/user/1/product/${product.id}`;  
+      const requestOptions = {
+        method: 'POST',  
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const response = await fetch(apiEndpoint, requestOptions);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Product Added successfully:', data);
+
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+  };
+
+
+
+
+
+
+
+
+  
 
   useEffect(() => {
     const getProducts = async () => {
@@ -163,7 +205,7 @@ const Products = () => {
                   </p>
                 </div>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item lead">$ {product.price}</li>
+                  <li className="list-group-item lead">₹ {product.price}</li>
                   {/* <li className="list-group-item">Dapibus ac facilisis in</li>
                     <li className="list-group-item">Vestibulum at eros</li> */}
                 </ul>

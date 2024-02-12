@@ -20,13 +20,58 @@ function AddProductModal() {
     }));
   };
 
-  const handleUpdate = () => {
-    //update data
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(e);
+
+    try {
+      const apiEndpoint = 'http://localhost:8080/product/addproduct/2';  
+      const requestOptions = {
+        method: 'POST',  
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      };
+
+      const response = await fetch(apiEndpoint, requestOptions);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Data saved successfully:', data);
+
+      setFormData({
+        productName: '',
+        description: '',
+        price: '',
+        stockQuantity: '',
+        category: '',
+        imgURL: '',
+      });
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
+
     console.log('Updated data:', formData);
 
     // Close modal
     setOpenModal(false);
   };
+
+
+
+  // {
+  //   "productName": "deepaK NPK",
+  //   "description": "god level product",
+  //   "price": 111,
+  //   "stockQuantity": 12,
+  //   "imgURL": "https://5.imimg.com/data5/QV/MV/GLADMIN-4277283/organic-fertilisers-500x500.png",
+  //   "dateAdded": "2024-02-11"
+  // }
 
   return (
     <>
@@ -46,8 +91,8 @@ function AddProductModal() {
               <Form.Control
                 type="text"
                 placeholder="Enter name"
-                name="name"
-                value={formData.name}
+                name="productName"
+                value={formData.productName}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -80,8 +125,8 @@ function AddProductModal() {
               <Form.Control
                 type="text"
                 placeholder="Enter stock"
-                name="stock"
-                value={formData.stock}
+                name="stockQuantity"
+                value={formData.stockQuantity}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -95,9 +140,9 @@ function AddProductModal() {
                 onChange={handleInputChange}
               >
                 <option value="">Select category</option>
-                <option value="fertilizers">Fertilizers</option>
-                <option value="pesticide">Pesticide</option>
-                <option value="fungicide">Fungicide</option>
+                <option value="1">Fertilizers</option>
+                <option value="2">Pesticide</option>
+                <option value="3">Fungicide</option>
               </Form.Control>
             </Form.Group>
 
@@ -106,15 +151,15 @@ function AddProductModal() {
               <Form.Control
                 type="text"
                 placeholder="Enter image URL"
-                name="image"
-                value={formData.image}
+                name="imgURL"
+                value={formData.imgURL}
                 onChange={handleInputChange}
               />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleUpdate}>
+          <Button variant="primary" type='submit' onClick={handleSubmit}>
             Add 
           </Button>
           <Button variant="secondary" onClick={() => setOpenModal(false)}>
