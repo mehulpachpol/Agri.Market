@@ -26,7 +26,11 @@ function AddProductModal() {
     console.log(e);
 
     try {
-      const apiEndpoint = 'http://localhost:8080/product/addproduct/2';  
+      console.log(formData.category);
+      const apiEndpoint = `http://localhost:8080/product/addproduct/${formData.category}/seller/2`; 
+      console.log(apiEndpoint); 
+      // const apiEndpoint = 'http://localhost:8080/product/addproduct/{category_id}/seller/{seller_id}';  
+
       const requestOptions = {
         method: 'POST',  
         headers: {

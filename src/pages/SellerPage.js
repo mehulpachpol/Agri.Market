@@ -1,5 +1,5 @@
 
-import {React , useState} from 'react';
+import {React , useState , useEffect} from 'react';
 import { Container, Row, Col, Card, Image, Button, Modal } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom'
 import backgroundImage from '../images/ferti.jpeg'; // Replace with the actual path to your default image
@@ -76,8 +76,28 @@ import UpdateProductModal from '../components/UpdateProductModal';
 
   const [orderSlide , setOrderSlide] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const [data, setData] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/product/all");
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        // Handle error scenarios
+      }
+    };
+  
+    getProducts();
+  }, []);
+  
+
   const orderHistory = [
     {
       orderId: '123456',
@@ -145,9 +165,33 @@ import UpdateProductModal from '../components/UpdateProductModal';
     setOrderSlide(!orderSlide);
   }
 
-  const handleDelete = ()=>{
-    console.log("delete called");
-  }
+  const handleDelete = async (productId) => {
+    try {
+      const apiEndpoint = `http://localhost:8080/product/${productId}`;
+  
+      const requestOptions = {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any additional headers if needed
+        },
+      };
+  
+      const response = await fetch(apiEndpoint, requestOptions);
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      console.log(`Product with ID ${productId} deleted successfully`);
+  
+      // You can perform additional actions after a successful delete if needed
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      // Handle error scenarios
+    }
+  };
+  
   const handleEdit = ()=>{
     console.log("Handle edit");
 
@@ -258,28 +302,23 @@ import UpdateProductModal from '../components/UpdateProductModal';
           <Card className="user-info-card shadow">
             <Card.Body>
               <Card.Title className="mb-4"></Card.Title>
-              {productsInfo.map((order, index) => (
+              {data.map((order, index) => (
                 <Row key={index} className="mb-4 align-items-center">
                 <Col md={4}>
-                  <img src={order.image || backgroundImage} alt={`Order ${order.productName}`} className="order-image" />
+                  <img src={order.imgURL} alt={`Order ${order.productName}`} className="order-image"
+                  style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
                 </Col>
                 <Col md={4}>
-                 {/* <p className="info-label">Order ID: {order.orderId}</p>
-                 
-                  <p className="info-text">Order Date: {order.date}</p>
-                  
-                  <p className="info-text">Total Amount: ${order.totalAmount.toFixed(2)}</p>
-                  <p className="info-text">Status: {order.status}</p> */}
 
                 <p className="info-label">Product Name : {order.productName}</p>
-                <p className="info-text">Category : {order.category}</p>
+                <p className="info-text">Stock : {order.stockQuantity}</p>
 
                 <p className="info-text">Price: ₹{order.price.toFixed(2)}</p>
 
                 <p className="info-text">Description: {order.description}</p>
 
                  
-                <p className="info-text">Order Date: {order.updatedDate}</p>
+                <p className="info-text">Added Date: {order.dateAdded}</p>
                  
 
                 </Col>
@@ -289,7 +328,7 @@ import UpdateProductModal from '../components/UpdateProductModal';
                 
                 <span>  </span>
                  <span>  </span>
-                <button type="button" class="btn btn-danger" onClick={handleDelete}>Delete</button>
+                <button type="button" class="btn btn-danger" onClick={()=>handleDelete(order.id)}>Delete</button>
                 </Col>
                 <hr style={{ color: '#06d47b', border: 'solid', borderWidth: '2px', opacity: '0.7', width: '100%' }} />
               </Row>

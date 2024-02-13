@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
 function UpdateProductModal() {
@@ -11,6 +11,27 @@ function UpdateProductModal() {
     category: '',
     image: '',
   });
+
+
+  useEffect(() => {
+    // Fetch existing data from the database using a GET request
+    const apiEndpoint = 'http://localhost:8080/product/all/2'; 
+    fetch(apiEndpoint)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Update the form data with the fetched data
+        setFormData(data);
+      })
+      .catch(error => {
+        console.error('Error fetching profile data:', error);
+        // Handle error scenarios
+      });
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

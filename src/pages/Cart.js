@@ -1,12 +1,44 @@
 import React from "react";
 import { Footer, Navbar } from "../components";
 import { useSelector, useDispatch } from "react-redux";
-import { addCart, delCart } from "../redux/action";
+import { addCart, delCart} from "../redux/action";
 import { Link } from "react-router-dom";
+import { useEffect , useState } from "react";
+import axios from 'axios';
+
 
 const Cart = () => {
+  const [dataArray, setDataArray] = useState([]);
+
   const state = useSelector((state) => state.handleCart);
   const dispatch = useDispatch();
+
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:8080/cart/user/1'); // Replace with your API endpoint
+  //       setDataArray(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
+
+  //   fetchData(); 
+  //   return () => {
+  //   };
+  // }, []);
+
+
+  // useEffect(() => {
+  //   console.log(dataArray)
+  //   if (dataArray.length > 0) {
+  //     console.log(dataArray)
+  //     fillCart(dataArray);
+  //   }
+  // }, [dataArray]);
+
+
 
   const EmptyCart = () => {
     return (
@@ -26,9 +58,14 @@ const Cart = () => {
   const addItem = (product) => {
     dispatch(addCart(product));
   };
+  
   const removeItem = (product) => {
     dispatch(delCart(product));
   };
+
+  // const fillItem = (productList) => {
+  //   dispatch(fillCart(productList));
+  // };
 
   const ShowCart = () => {
     let subtotal = 0;

@@ -18,6 +18,33 @@ function UpdateProfileModal() {
   });
 
 
+  useEffect(() => {
+    // Fetch existing data from the database using a GET request
+    const apiEndpoint = 'http://localhost:8080/customer/all/1'; 
+    fetch(apiEndpoint)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Update the form data with the fetched data
+        setFormData(data);
+      })
+      .catch(error => {
+        console.error('Error fetching profile data:', error);
+        // Handle error scenarios
+      });
+  }, []);
+
+
+
+
+
+
+
+
   // {
   //   "userName": "Swaminathan",
   //   "email": "Ms@gmail.com",

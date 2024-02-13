@@ -4,6 +4,7 @@ import { Bar, Pie } from 'react-chartjs-2';
 import {CategoryScale} from 'chart.js'; 
 import Chart from 'chart.js/auto';
 import Sidebar from './Sidebar';
+import AddCategoryModal from '../../components/AddCategoryModal';
 
 
 
@@ -56,6 +57,7 @@ const Admin = () => {
           {/* Charts */}
           <Row>
           <Button className="btn btn-outline-success btn-light m-2"><i className="fas fa-history"></i> Admin Zone</Button>
+          <AddCategoryModal/>
 
             <Col sm={6}>
               <h4>Bar Chart</h4>
