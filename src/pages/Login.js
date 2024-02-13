@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { Footer, Navbar } from '../components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
+import NavbarLogin from '../components/NavbarLogin';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginStatus , setLoginStatus] = useState(false);
+
+  const navigate = useNavigate()
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,12 +44,42 @@ const Login = () => {
       console.log(data);
       if(data == 202){
         console.log("Correct credentials");
-        alert("Login Successfull");
+        toast.success('Login Successfull')
         setLoginStatus(true);
+        sessionStorage['role'] = "Buyer"
+        sessionStorage['id'] = 2
+        navigate('/home')
+
       }
+
+      // if(data == 202){
+      //   if(response.role === "Buyer")
+      //   {
+
+      //   console.log("Correct credentials");
+      //   toast.success('Login Successfull')
+      //   setLoginStatus(true);
+      //   navigate('/home')
+      //   }
+      //   else if(response.role === "Buyer"){
+      //     console.log("Correct credentials");
+      //     toast.success('Seller Login Successfull')
+      //     setLoginStatus(true);
+      //     navigate('/seller')
+      //   }
+      //   else{
+
+      //     console.log("Correct credentials");
+      //     toast.success('Admin Login Successfull')
+      //     setLoginStatus(true);
+      //     navigate('/admin')
+
+      //   }
+
+      
       
 
-      console.log('API Response:', data);
+      console.log('API Response:', response);
       
       // You can perform additional actions based on the API response if needed
 
@@ -52,7 +88,7 @@ const Login = () => {
 
       console.error('Error:', error);
       console.log("Wrong Creds");
-      alert("Login Failed");
+      toast.error('Login Failed Try Again')
 
       setLoginStatus(false);
     }
@@ -60,7 +96,7 @@ const Login = () => {
 
   return (
     <>
-      <Navbar />
+      <NavbarLogin/>
       <div className="container-fluid my-3 py-3">
         <h1 className="text-center">Login</h1>
         <hr />

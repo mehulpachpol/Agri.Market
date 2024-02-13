@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Footer, Navbar } from '../components';
 import { Link } from 'react-router-dom';
+import NavbarLogin from '../components/NavbarLogin';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -55,7 +56,7 @@ const Register = () => {
 
   return (
     <>
-      <Navbar />
+      <NavbarLogin/>
       <div className="container my-6 py-6">
         <br />
 
@@ -126,7 +127,7 @@ const Register = () => {
                 <div className="my-3">
                   <p>
                     Already have an account?{' '}
-                    <Link to="/login" className="text-decoration-underline text-info">
+                    <Link to="/" className="text-decoration-underline text-info">
                       Login
                     </Link>{' '}
                   </p>

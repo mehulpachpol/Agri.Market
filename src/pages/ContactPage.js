@@ -1,9 +1,15 @@
 import React from "react";
 import { Footer, Navbar } from "../components";
+import NavbarLogin from "../components/NavbarLogin";
 const ContactPage = () => {
   return (
     <>
-      <Navbar />
+
+    {
+      sessionStorage.getItem('id')!=null?<Navbar/>:<NavbarLogin/>
+    }
+      {/* <Navbar /> */}
+      {/* <NavbarLogin/> */}
       <div className="container my-3 py-3">
         <h1 className="text-center">Contact Us</h1>
         <hr />

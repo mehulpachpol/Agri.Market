@@ -1,21 +1,9 @@
 import React from 'react'
-import { NavLink, Navigate } from 'react-router-dom'
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify'
+import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-const Navbar = () => {
-    const navigate = useNavigate()
+const NavbarLogin = () => {
     const state = useSelector(state => state.handleCart)
-
-
-    const handleClearSessionStorage = () => {
-        // Clear session storage
-        sessionStorage.clear();
-        toast.success('You Logged Out')
-        navigate('/')
-
-      };
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 sticky-top">
             <div className="container">
@@ -35,29 +23,17 @@ const Navbar = () => {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/">Home </NavLink>
                         </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/product">Products</NavLink>
-                        </li>
+
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/about">About</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/contact">Contact</NavLink>
                         </li>
-                        {/* <li className="nav-item">
-                            <NavLink className="nav-link" to="/seller">Sellers Zone</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/admin">Admin Panel</NavLink>
-                        </li> */}
                     </ul>
                     <div className="buttons text-center">
-                        <NavLink to="/login" className="btn btn-outline-dark m-2"><i className="fa fa-sign-in-alt mr-1"></i> Login</NavLink>
+                        <NavLink to="/" className="btn btn-outline-dark m-2"><i className="fa fa-sign-in-alt mr-1"></i> Login</NavLink>
                         <NavLink to="/register" className="btn btn-outline-dark m-2"><i className="fa fa-user-plus mr-1"></i> Register</NavLink>
-                        <NavLink to="/cart" className="btn btn-outline-dark m-2"><i className="fa fa-cart-shopping mr-1"></i> Cart ({state.length}) </NavLink>
-                        <NavLink to="/profile" className="btn btn-outline-dark m-2"><i className="fa fa-user-plus mr-1"></i> Profile</NavLink>
-                        <NavLink onClick={handleClearSessionStorage} to="/"  className="btn btn-outline-danger m-2"><i className="fa fa-user-exit mr-1"></i> Log Out</NavLink>
-
 
                     </div>
                 </div>
@@ -68,4 +44,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default NavbarLogin

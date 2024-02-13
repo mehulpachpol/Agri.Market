@@ -11,6 +11,7 @@ import backgroundImage from '../images/ferti.jpeg'; // Replace with the actual p
 
 
 
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   MDBCol,
@@ -36,6 +37,7 @@ import EditModal from '../components/UpdateProductModal';
 import UpdateSellerProfileModal from '../components/UpdateSellerProfileModal';
 import AddProductModal from '../components/AddProductModal';
 import UpdateProductModal from '../components/UpdateProductModal';
+import NavbarSeller from '../components/NavbarSeller';
 
 
  export const SellerPage = ()=> {
@@ -199,7 +201,7 @@ import UpdateProductModal from '../components/UpdateProductModal';
 
   return (
     <>
-    <Navbar/>
+    <NavbarSeller/>
     <section style={{ backgroundColor: '#eee' , height:'100%' }}>
 
     { orderSlide ? <div>

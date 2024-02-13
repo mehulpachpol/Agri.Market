@@ -18,6 +18,9 @@ import SellerAdmin from './components/SellerAnalytics';
 import AnalyticsAdmin from './components/AnalyticsAdmin';
 import CustomerAnalytics from './components/CustomerAnalytics';
 import SellerAnalytics from './components/SellerAnalytics';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -26,13 +29,14 @@ root.render(
  
     <Provider store={store}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/product" element={<Products />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/register" element={<Register />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/profile" element={<ProfilePage/>} />
@@ -45,6 +49,8 @@ root.render(
         <Route path="*" element={<PageNotFound />} />
         <Route path="/product/*" element={<PageNotFound />} />
       </Routes>
+      <ToastContainer/>
+
     </Provider>
   </BrowserRouter>
 );
