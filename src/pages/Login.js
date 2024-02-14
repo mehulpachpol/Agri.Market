@@ -32,17 +32,18 @@ const Login = () => {
         body: JSON.stringify(requestData),
       });
       
-
+      console.log("hi...")
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+      
       // Handle the API response
       const data = response.status;
-      console.log(response);
+      const dto = await response.data;
+      console.log(dto);
       console.log(data);
-      if(data == 202){
+      if(data == 200){
         console.log("Correct credentials");
         toast.success('Login Successfull')
         setLoginStatus(true);

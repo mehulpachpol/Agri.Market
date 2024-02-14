@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
 function AddProductModal() {
@@ -11,6 +11,29 @@ function AddProductModal() {
     category: '',
     image: '',
   });
+  const [categories, setCategories] = useState([]);
+
+
+
+
+  useEffect(() => {
+    // Fetch categories from the API and update the state
+    const fetchCategories = async () => {
+      try {
+        const apiEndpoint = 'http://localhost:8080/category/all'; // Replace with your actual API endpoint
+        const response = await fetch(apiEndpoint);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setCategories(data); // Assuming the API returns an array of category objects
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -68,14 +91,7 @@ function AddProductModal() {
 
 
 
-  // {
-  //   "productName": "deepaK NPK",
-  //   "description": "god level product",
-  //   "price": 111,
-  //   "stockQuantity": 12,
-  //   "imgURL": "https://5.imimg.com/data5/QV/MV/GLADMIN-4277283/organic-fertilisers-500x500.png",
-  //   "dateAdded": "2024-02-11"
-  // }
+ 
 
   return (
     <>
@@ -135,7 +151,7 @@ function AddProductModal() {
               />
             </Form.Group>
 
-            <Form.Group controlId="formCategory">
+            {/* <Form.Group controlId="formCategory">
               <Form.Label>Category:</Form.Label>
               <Form.Control
                 as="select"
@@ -147,6 +163,23 @@ function AddProductModal() {
                 <option value="1">Fertilizers</option>
                 <option value="2">Pesticide</option>
                 <option value="3">Fungicide</option>
+              </Form.Control>
+            </Form.Group> */}
+
+            <Form.Group controlId="formCategory">
+              <Form.Label>Category:</Form.Label>
+              <Form.Control
+                as="select"
+                name="category"
+                value={formData.category}
+                onChange={handleInputChange}
+              >
+                <option value="">Select category</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.categoryName}
+                  </option>
+                ))}
               </Form.Control>
             </Form.Group>
 

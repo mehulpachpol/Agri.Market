@@ -13,6 +13,27 @@ function UpdateProductModal() {
   });
 
 
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    // Fetch categories from the API and update the state
+    const fetchCategories = async () => {
+      try {
+        const apiEndpoint = 'http://localhost:8080/category/all'; // Replace with your actual API endpoint
+        const response = await fetch(apiEndpoint);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setCategories(data); // Assuming the API returns an array of category objects
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+
   useEffect(() => {
     // Fetch existing data from the database using a GET request
     const apiEndpoint = 'http://localhost:8080/product/all/2'; 
@@ -152,9 +173,11 @@ function UpdateProductModal() {
                 onChange={handleInputChange}
               >
                 <option value="">Select category</option>
-                <option value="1">Fertilizers</option>
-                <option value="2">Pesticide</option>
-                <option value="3">Fungicide</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.categoryName}
+                  </option>
+                ))}
               </Form.Control>
             </Form.Group>
 
