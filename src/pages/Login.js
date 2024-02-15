@@ -22,36 +22,45 @@ const Login = () => {
       password: password,
     };
 
-    try {
-      // Make a POST request to your API
-      const response = await fetch('http://localhost:8080/customer/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestData),
-      });
-      
-      console.log("hi...")
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+
+    
+  fetch('http://localhost:8080/customer/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestData),
+  })
+  .then(response => response.json())
+  .then(data => {
+    
+      // if (!data.ok) {
+      //   throw new Error(`HTTP error! Status: ${data.status}`);
+      // }
       
       // Handle the API response
-      const data = response.status;
-      const dto = await response.data;
-      console.log(dto);
       console.log(data);
-      if(data == 200){
-        console.log("Correct credentials");
-        toast.success('Login Successfull')
-        setLoginStatus(true);
-        sessionStorage['role'] = "Buyer"
-        sessionStorage['id'] = 2
-        navigate('/home')
-
+      
+      if(data.status === 500 ){
+        console.log("Wrong Creds");
+        toast.error('Login Failed Try Again')
+  
+        setLoginStatus(false);
       }
+      else{
+        if(data.mesg === "Successful Authentication!!!"){
+          console.log("Correct credentials");
+          toast.success('Login Successfull')
+          setLoginStatus(true);
+          sessionStorage['role'] = data.role
+          sessionStorage['id'] = data.id
+          navigate('/home')
+  
+        }
+      }
+      
+
 
       // if(data == 202){
       //   if(response.role === "Buyer")
@@ -76,23 +85,89 @@ const Login = () => {
       //     navigate('/admin')
 
       //   }
-
-      
-      
-
-      console.log('API Response:', response);
-      
-      // You can perform additional actions based on the API response if needed
-
-    } catch (error) {
-      // Handle errors
-
+    
+  })
+  .catch(error => {
+    
       console.error('Error:', error);
       console.log("Wrong Creds");
       toast.error('Login Failed Try Again')
 
       setLoginStatus(false);
-    }
+    
+  });
+
+    // try {
+    //   // Make a POST request to your API
+    //   const response = await fetch('http://localhost:8080/customer/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(requestData),
+    //   });
+      
+    //   console.log("hi...")
+
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! Status: ${response.status}`);
+    //   }
+      
+    //   // Handle the API response
+    //   const data = response.status;
+    //   const dto = await response.data;
+    //   console.log(dto);
+    //   console.log(data);
+    //   if(data == 200){
+    //     console.log("Correct credentials");
+    //     toast.success('Login Successfull')
+    //     setLoginStatus(true);
+    //     sessionStorage['role'] = "Buyer"
+    //     sessionStorage['id'] = 2
+    //     navigate('/home')
+
+    //   }
+
+    //   // if(data == 202){
+    //   //   if(response.role === "Buyer")
+    //   //   {
+
+    //   //   console.log("Correct credentials");
+    //   //   toast.success('Login Successfull')
+    //   //   setLoginStatus(true);
+    //   //   navigate('/home')
+    //   //   }
+    //   //   else if(response.role === "Buyer"){
+    //   //     console.log("Correct credentials");
+    //   //     toast.success('Seller Login Successfull')
+    //   //     setLoginStatus(true);
+    //   //     navigate('/seller')
+    //   //   }
+    //   //   else{
+
+    //   //     console.log("Correct credentials");
+    //   //     toast.success('Admin Login Successfull')
+    //   //     setLoginStatus(true);
+    //   //     navigate('/admin')
+
+    //   //   }
+
+      
+      
+
+    //   console.log('API Response:', response);
+      
+    //   // You can perform additional actions based on the API response if needed
+
+    // } catch (error) {
+    //   // Handle errors
+
+    //   console.error('Error:', error);
+    //   console.log("Wrong Creds");
+    //   toast.error('Login Failed Try Again')
+
+    //   setLoginStatus(false);
+    // }
   };
 
   return (

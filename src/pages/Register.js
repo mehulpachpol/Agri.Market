@@ -5,13 +5,13 @@ import NavbarLogin from '../components/NavbarLogin';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    userName: '',
     email: '',
     password: '',
-    isSeller: false,
+    role: "",
   });
 
-  const { name, email, password, isSeller } = formData;
+  const { userName, email, password, role } = formData;
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -44,10 +44,10 @@ const Register = () => {
       console.log('Data saved successfully:', data);
 
       setFormData({
-        name: '',
+        userName: '',
         email: '',
         password: '',
-        isSeller: false,
+        role: '',
       });
     } catch (error) {
       console.error('Error saving data:', error);
@@ -81,8 +81,8 @@ const Register = () => {
                     type="text"
                     className="form-control"
                     id="Name"
-                    name="name"
-                    value={name}
+                    name="userName"
+                    value={userName}
                     onChange={handleInputChange}
                     placeholder="Enter Your Name"
                   />
@@ -111,7 +111,7 @@ const Register = () => {
                     placeholder="Password"
                   />
                 </div>
-                <div className="form-check">
+                {/* <div className="form-check">
                   <input
                     className="form-check-input"
                     type="checkbox"
@@ -119,11 +119,30 @@ const Register = () => {
                     name="isSeller"
                     checked={isSeller}
                     onChange={handleInputChange}
-                  />
-                  <label className="form-check-label" htmlFor="flexCheck">
+                  /> */}
+
+                <div className="row fw-bold text-muted mt-4 text-center">
+                  <div className="col-md-12 col-sm-12">
+                    <div className="row">
+                      <div className="col-md-2">
+                        <label>Role: </label>
+                      </div>
+                      <br/>
+                      <div className="col-md-4">
+                        <input type="radio" name="role" value="CUSTOMER" checked={role === "CUSTOMER"} onChange={handleInputChange} /> Customer
+                      </div>
+                      <div className="col-md-5">
+                        <input type="radio" name="role" value="SELLER" checked={role === "SELLER"} onChange={handleInputChange} />
+                         Seller
+                      </div>
+                     
+                    </div>
+                  </div>
+                </div>
+                  {/* <label className="form-check-label" htmlFor="flexCheck">
                     Register as Seller
                   </label>
-                </div>
+                </div> */}
                 <div className="my-3">
                   <p>
                     Already have an account?{' '}

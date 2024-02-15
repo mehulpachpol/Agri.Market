@@ -85,24 +85,51 @@ export const ProfilePage = ()=> {
     setOrderSlide(!orderSlide);
   }
 
+
   useEffect(() => {
+    
     const fetchData = async () => {
       try {
         //make it useful for the particular user id
         // const response = await fetch("http://localhost:8080/customer/all/{id}");
-
-        const response = await fetch("http://localhost:8080/customer/all/1");
+        const id = sessionStorage['id']
+        console.log(`http://localhost:8080/customer/all/${id}`)
+        const response = await fetch(`http://localhost:8080/customer/all/${id}`);
         const data = await response.json();
         console.log(data);
         setProfileData(data);
         console.log(profileData);
+        // if (profileData) {
+        //   setProfileData(handleAddressDefaults());
+        // }
+        
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+
     };
+
+
   
     fetchData();
+    
   }, []);
+
+
+  // const handleAddressDefaults = () => {
+  //   if (profileData && profileData.address === null) {
+  //     return { ...profileData, address: {streetAddress: "-", city: "-", country: "-", state: "-",zipCode:"" } };
+  //   }
+  //   return profileData;
+  // };
+
+  // // Set userData with default address values if address is null
+  // useEffect(() => {
+  //   if (profileData) {
+  //     setProfileData(handleAddressDefaults());
+  //   }
+  // }, [profileData]);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -157,7 +184,7 @@ export const ProfilePage = ()=> {
               className="user-image"
             />
             <Card.Body>
-              <Card.Title>{profileData.firstName} {profileData.lastName}</Card.Title>
+              <Card.Title>{profileData.firstName } {profileData.lastName }</Card.Title>
               <hr style={{ color: '#06d47b', border: 'solid', borderWidth: '2px', opacity: '0.7' }} />
 
               <Card.Text className="text-muted">Farmer</Card.Text>
@@ -169,12 +196,15 @@ export const ProfilePage = ()=> {
             <Card.Body>
               <Card.Title className="mb-4">User Information</Card.Title>
               <Row>
+              
                 <Col md={6}>
                   <p className="info-label">Address</p>
-                  <p className="info-text">{profileData.address.streetAddress} , {profileData.address.city}, {profileData.address.state}</p>
+                  
+                  <p className="info-text">{profileData.address.streetAddress } , {profileData.address.city}, {profileData.address.state}</p>
                   <hr style={{ color: '#06d47b', border: 'solid', borderWidth: '2px', opacity: '0.7' }} />
-
+                
                 </Col>
+                  
                 <Col md={6}>
                   <p className="info-label">Email</p>
                   <p className="info-text">{profileData.email}</p>
@@ -183,13 +213,13 @@ export const ProfilePage = ()=> {
               <Row>
                 <Col md={6}>
                   <p className="info-label">Phone</p>
-                  <p className="info-text">(+91)-{profileData.phoneNo}</p>
+                  <p className="info-text">(+91)-{profileData.phoneNo || "-"}</p>
                   <hr style={{ color: '#06d47b', border: 'solid', borderWidth: '2px', opacity: '0.7' }} />
 
                 </Col>
                 <Col md={6}>
                   <p className="info-label">Mobile</p>
-                  <p className="info-text">(+91)-{profileData.phoneNo}</p>
+                  <p className="info-text">(+91)-{profileData.phoneNo || "-"}</p>
                 </Col>
               </Row>
               {/* Add more user information as needed */}

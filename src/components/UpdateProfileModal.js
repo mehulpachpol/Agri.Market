@@ -20,7 +20,8 @@ function UpdateProfileModal() {
 
   useEffect(() => {
     // Fetch existing data from the database using a GET request
-    const apiEndpoint = 'http://localhost:8080/customer/all/1'; 
+    const id = sessionStorage['id']
+    const apiEndpoint = `http://localhost:8080/customer/all/${id}`; 
     fetch(apiEndpoint)
       .then(response => {
         if (!response.ok) {

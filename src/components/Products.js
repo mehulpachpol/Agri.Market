@@ -30,7 +30,8 @@ const Products = () => {
     console.log(product.id);
 
     try {
-      const apiEndpoint = `http://localhost:8080/cart/user/1/product/${product.id}`;  
+      const id = sessionStorage['id']
+      const apiEndpoint = `http://localhost:8080/cart/user/${id}/product/${product.id}`;  
       const requestOptions = {
         method: 'POST',  
         headers: {
