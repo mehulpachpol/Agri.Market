@@ -1,4 +1,4 @@
-import {React,useState} from 'react';
+import {React,useState,useEffect} from 'react';
 import { Card, Row, Col, ListGroup, Container,Button,Modal } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 import Sidebar from '../pages/Admin/Sidebar';
@@ -7,11 +7,13 @@ const CustomerAnalytics = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [custCount, setCustCount] = useState(0);
+  const [orderCount, setOrderCount] = useState(0);
 
   // Hardcoded data for analytics
   const analyticsData = {
-    totalCustomers: 1000,
-    totalOrders: 5000,
+    totalCustomers: custCount,
+    totalOrders: orderCount,
     uniqueVisitors: 1500,
     customerWithHighestOrders: 'Ritesh Parkhad',
   };
@@ -27,14 +29,77 @@ const CustomerAnalytics = () => {
     setSelectedCustomer(null);
   };
 
+ // http://localhost:8080/admin/users/byRole?role=ROLE_CUSTOMER
+
+ useEffect(() => {
+  // Fetch categories from the API and update the state
+  const fetchCustomers = async () => {
+    try {
+      const apiEndpoint = `http://localhost:8080/admin/users/byRole?role=ROLE_CUSTOMER`; // Replace with your actual API endpoint
+      const response = await fetch(apiEndpoint);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data)
+      setCustomers(data); // Assuming the API returns an array of category objects
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+  fetchCustomers();
+  }, []);
+
+ // 'http://localhost:8080/admin/userscount/byRole?role=ROLE_CUSTOMER'
+ 
+ useEffect(() => {
+  // Fetch categories from the API and update the state
+  const countCustomers = async () => {
+    try {
+      const apiEndpoint = `http://localhost:8080/admin/userscount/byRole?role=ROLE_CUSTOMER`; // Replace with your actual API endpoint
+      const response = await fetch(apiEndpoint);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data)
+      setCustCount(data); // Assuming the API returns an array of category objects
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const countOrders = async () => {
+    try {
+      const apiEndpoint = `http://localhost:8080/admin/ordersCount`; // Replace with your actual API endpoint
+      const response = await fetch(apiEndpoint);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data)
+      setOrderCount(data); // Assuming the API returns an array of category objects
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  countCustomers();
+  countOrders();
+  }, []);
+
+const[customers,setCustomers] = useState([])
+
+const customerList = customers.map((c) => c.userName)
+
   // Hardcoded data for customer list
-  const customerList = [
-    'Alice Johnson',
-    'Bob Smith',
-    'Charlie Brown',
-    'David Johnson',
-    'Eva Williams',
-  ];
+  // const customerList = [
+  //   'Alice Johnson',
+  //   'Bob Smith',
+  //   'Charlie Brown',
+  //   'David Johnson',
+  //   'Eva Williams',
+  // ];
 
   // Chart data
   const chartData = {

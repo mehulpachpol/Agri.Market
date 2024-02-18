@@ -1,5 +1,8 @@
 import React from 'react'
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import { NavLink, Navigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
 
 // Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
@@ -14,7 +17,21 @@ import CustomerAdmin from '../../components/CustomerAnalytics';
 import SellerAdmin from '../../components/SellerAnalytics';
 import AnalyticsAdmin from '../../components/AnalyticsAdmin';
 
+
+
 function Sidebar() {
+
+    const navigate = useNavigate()
+
+    const handleClearSessionStorage = () => {
+        // Clear session storage
+       
+        sessionStorage.clear();
+        toast.success('You Logged Out')
+        navigate('/')
+    
+      };
+
   return (
     <div>
         <div>
@@ -69,10 +86,10 @@ function Sidebar() {
 
 
         <NavItem eventKey="logout">
-            <NavIcon>
+            <NavIcon onClick={handleClearSessionStorage} >
                 <i className="fa fa-fw fa-sign-out" style={{ fontSize: '1.75em' }} />
             </NavIcon>
-            <NavText>
+            <NavText >
                 Log Out
             </NavText>
         </NavItem>

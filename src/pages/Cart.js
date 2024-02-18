@@ -5,12 +5,15 @@ import { addCart, delCart} from "../redux/action";
 import { Link } from "react-router-dom";
 import { useEffect , useState } from "react";
 import axios from 'axios';
+import {persistor} from '../redux/store';
+
 
 
 const Cart = () => {
   const [dataArray, setDataArray] = useState([]);
 
   const state = useSelector((state) => state.handleCart);
+ // const state = persistor.getState();
   const dispatch = useDispatch();
 
 

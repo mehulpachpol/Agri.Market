@@ -1,6 +1,7 @@
 
 import {React , useState , useEffect} from 'react';
 import { Container, Row, Col, Card, Image, Button, Modal } from 'react-bootstrap';
+import { toast } from 'react-toastify'
 import { NavLink } from 'react-router-dom'
 import backgroundImage from '../images/ferti.jpeg'; // Replace with the actual path to your default image
 // import Box from '@mui/material/Box';
@@ -54,6 +55,22 @@ import NavbarSeller from '../components/NavbarSeller';
     p: 4,
   };
 
+  const [profileData, setProfileData] = useState({
+    userName: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    phoneNo: '',
+    dob: '',
+    address: {
+      streetAddress: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: '',
+    },
+  });
+
   // const useStyles = makeStyles((theme) => ({
   //   modal: {
   //     display: 'flex',
@@ -82,6 +99,7 @@ import NavbarSeller from '../components/NavbarSeller';
   const [data, setData] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [productDelete, setProductDelete] = useState(0);
 
 
   useEffect(() => {
@@ -97,6 +115,38 @@ import NavbarSeller from '../components/NavbarSeller';
     };
   
     getProducts();
+  }, []);
+
+
+
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      try {
+        //make it useful for the particular user id
+        // const response = await fetch("http://localhost:8080/customer/all/{id}");
+        const id = sessionStorage['id']
+        console.log(`http://localhost:8080/customer/all/${id}`)
+        const response = await fetch(`http://localhost:8080/customer/all/${id}`);
+        const data = await response.json();
+        console.log(data);
+        setProfileData(data);
+        console.log(profileData);
+        // if (profileData) {
+        //   setProfileData(handleAddressDefaults());
+        // }
+        
+        
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+
+    };
+
+
+  
+    fetchData();
+    
   }, []);
   
 
@@ -132,37 +182,6 @@ import NavbarSeller from '../components/NavbarSeller';
     // Add more order history items as needed
   ];
 
-  const productsInfo = [
-    {
-      productName: 'BASF Ferilizers',
-      description : "",
-      price : 200,
-      category : "Feritilzer",
-      updatedDate: '2023-01-15',
-      image: '../images/ferti.jpeg', 
-    },
-    {
-      productName: 'Syngenta Zingaat',
-      description : "",
-      price : 120,
-      category : "Pesticide",
-      updatedDate: '2021-08-15',
-      image: '../images/pest.jpeg', 
-    },
-    {
-      productName: 'UPL NPK Fertilizer',
-      description : "",
-      price : 87,
-      category : "Feritilzer",
-      updatedDate: '2022-09-12',
-      image: '../images/pest2.jpeg', 
-    }
-  ];
-
-  const blurBackgroundStyle = {
-    backdropFilter: 'blur(8px)',
-  };
-
   const handleHistory = ()=>{
     setOrderSlide(!orderSlide);
   }
@@ -186,6 +205,9 @@ import NavbarSeller from '../components/NavbarSeller';
       }
   
       console.log(`Product with ID ${productId} deleted successfully`);
+      console.log(productDelete);
+      toast.info(`Product  deleted successfully`)
+      setProductDelete(1);
   
       // You can perform additional actions after a successful delete if needed
     } catch (error) {
@@ -226,13 +248,13 @@ import NavbarSeller from '../components/NavbarSeller';
         <Col md={4}>
           <Card className="user-card shadow">
             <Image
-              src="data:image/jpeg;base64,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" // Replace with the actual user image URL
+              src="https://www.gonukkad.com/wp-content/uploads/2023/12/Seller-on-Myntra.webp"
               alt="User"
               roundedCircle
               className="user-image"
             />
             <Card.Body>
-              <Card.Title>Rajesh Patil</Card.Title>
+              <Card.Title>{profileData.firstName } {profileData.lastName }</Card.Title>
               <hr style={{ color: '#06d47b', border: 'solid', borderWidth: '2px', opacity: '0.7' }} />
 
               <Card.Text className="text-muted">Seller</Card.Text>
@@ -244,27 +266,30 @@ import NavbarSeller from '../components/NavbarSeller';
             <Card.Body>
               <Card.Title className="mb-4">Seller Information</Card.Title>
               <Row>
+              
                 <Col md={6}>
                   <p className="info-label">Address</p>
-                  <p className="info-text">Datala, Malkapur</p>
+                  
+                  <p className="info-text">{profileData.address.streetAddress } , {profileData.address.city}, {profileData.address.state}</p>
                   <hr style={{ color: '#06d47b', border: 'solid', borderWidth: '2px', opacity: '0.7' }} />
-
+                
                 </Col>
+                  
                 <Col md={6}>
                   <p className="info-label">Email</p>
-                  <p className="info-text">Rajesh@example.com</p>
+                  <p className="info-text">{profileData.email}</p>
                 </Col>
               </Row>
               <Row>
                 <Col md={6}>
                   <p className="info-label">Phone</p>
-                  <p className="info-text">(02580)-123456</p>
+                  <p className="info-text">(+91)-{profileData.phoneNo || "-"}</p>
                   <hr style={{ color: '#06d47b', border: 'solid', borderWidth: '2px', opacity: '0.7' }} />
 
                 </Col>
                 <Col md={6}>
                   <p className="info-label">Mobile</p>
-                  <p className="info-text">09876554321</p>
+                  <p className="info-text">(+91)-{profileData.phoneNo || "-"}</p>
                 </Col>
               </Row>
               {/* Add more user information as needed */}
@@ -326,7 +351,7 @@ import NavbarSeller from '../components/NavbarSeller';
                 </Col>
                 <Col md={3}>
 
-                <UpdateProductModal/>
+                <UpdateProductModal pid = {order.id} />
                 
                 <span>  </span>
                  <span>  </span>

@@ -4,9 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 
+import {persistor} from '../redux/store';
+ 
 const Navbar = () => {
     const navigate = useNavigate()
     const state = useSelector(state => state.handleCart)
+   // const state = persistor.getState();
+    console.log(state)
 
 
     const handleClearSessionStorage = () => {

@@ -1,4 +1,4 @@
-import {React , useState} from 'react';
+import {React , useState,useEffect} from 'react';
 import { Card, Row, Col, ListGroup, Container,Button } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 import Sidebar from '../pages/Admin/Sidebar';
@@ -28,14 +28,30 @@ const SellerAnalytics = () => {
     setSelectedCustomer(null);
   };
 
-  // Hardcoded data for customer list
-  const customerList = [
-    'Ritesh Parkhad',
-    'Bobby Samar',
-    'Vikas Dhamaj',
-    'David Johnson',
-    'Eva Williams',
-  ];
+
+  useEffect(() => {
+    // Fetch categories from the API and update the state
+    const fetchCustomers = async () => {
+      try {
+        const apiEndpoint = `http://localhost:8080/admin/users/byRole?role=ROLE_SELLER`; // Replace with your actual API endpoint
+        const response = await fetch(apiEndpoint);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(data)
+        setCustomers(data); // Assuming the API returns an array of category objects
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+    fetchCustomers();
+    }, []);
+  
+  const[customers,setCustomers] = useState([])
+  
+  const customerList = customers.map((c) => c.userName)
+
 
   // Chart data
   const chartData = {

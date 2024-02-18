@@ -129,10 +129,10 @@ const Register = () => {
                       </div>
                       <br/>
                       <div className="col-md-4">
-                        <input type="radio" name="role" value="CUSTOMER" checked={role === "CUSTOMER"} onChange={handleInputChange} /> Customer
+                        <input type="radio" name="role" value="ROLE_CUSTOMER" checked={role === "ROLE_CUSTOMER"} onChange={handleInputChange} /> Customer
                       </div>
                       <div className="col-md-5">
-                        <input type="radio" name="role" value="SELLER" checked={role === "SELLER"} onChange={handleInputChange} />
+                        <input type="radio" name="role" value="ROLE_SELLER" checked={role === "ROLE_SELLER"} onChange={handleInputChange} />
                          Seller
                       </div>
                      

@@ -4,12 +4,12 @@ import { Button, Modal, Form } from 'react-bootstrap';
 function AddProductModal() {
     const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    stock: '',
-    category: '',
-    image: '',
+    productName: '',
+        description: '',
+        price: '',
+        stockQuantity: '',
+        category: '',
+        imgURL: '',
   });
   const [categories, setCategories] = useState([]);
 
@@ -26,6 +26,7 @@ function AddProductModal() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
+        console.log(data)
         setCategories(data); // Assuming the API returns an array of category objects
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -49,8 +50,9 @@ function AddProductModal() {
     console.log(e);
 
     try {
-      console.log(formData.category);
-      const apiEndpoint = `http://localhost:8080/product/addproduct/${formData.category}/seller/2`; 
+      console.log(formData.category.id);
+      const id = sessionStorage['id']
+      const apiEndpoint = `http://localhost:8080/product/addproduct/${formData.category}/seller/${id}`; 
       console.log(apiEndpoint); 
       // const apiEndpoint = 'http://localhost:8080/product/addproduct/{category_id}/seller/{seller_id}';  
 
@@ -178,6 +180,7 @@ function AddProductModal() {
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.categoryName}
+                   
                   </option>
                 ))}
               </Form.Control>

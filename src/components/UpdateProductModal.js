@@ -1,15 +1,15 @@
 import React, { useState , useEffect } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
-function UpdateProductModal() {
+function UpdateProductModal(props) {
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    stock: '',
-    category: '',
-    image: '',
+    productName: '',
+        description: '',
+        price: '',
+        stockQuantity: '',
+        category: '',
+        imgURL: '',
   });
 
 
@@ -36,7 +36,8 @@ function UpdateProductModal() {
 
   useEffect(() => {
     // Fetch existing data from the database using a GET request
-    const apiEndpoint = 'http://localhost:8080/product/all/2'; 
+    const p_id = props.pid;
+    const apiEndpoint = `http://localhost:8080/product/all/${p_id}`; 
     fetch(apiEndpoint)
       .then(response => {
         if (!response.ok) {
@@ -62,11 +63,12 @@ function UpdateProductModal() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
 
     try {
-      const apiEndpoint = 'http://localhost:8080/product/2';  
+      const p_id = props.pid;
+      const apiEndpoint = `http://localhost:8080/product/${p_id}`;  
       const requestOptions = {
         method: 'PUT',  
         headers: {
@@ -85,27 +87,33 @@ function UpdateProductModal() {
       console.log('Data saved successfully:', data);
 
       setFormData({
-        name: '',
+        productName: '',
         description: '',
         price: '',
-        stock: '',
+        stockQuantity: '',
         category: '',
-        image: '',
+        imgURL: '',
       });
     } catch (error) {
       console.error('Error saving data:', error);
     }
-  };
 
 
-
-  const handleUpdate = () => {
-    //update data
     console.log('Updated data:', formData);
 
     // Close modal
     setOpenModal(false);
   };
+
+
+
+  // const handleUpdate = () => {
+  //   //update data
+  //   console.log('Updated data:', formData);
+
+  //   // Close modal
+  //   setOpenModal(false);
+  // };
 
   return (
     <>
@@ -118,14 +126,14 @@ function UpdateProductModal() {
           <Modal.Title>Update Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSubmit}>
+          <Form >
             <Form.Group controlId="formName">
               <Form.Label>Name:</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter name"
-                name="name"
-                value={formData.name}
+                name="productName"
+                value={formData.productName}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -158,8 +166,8 @@ function UpdateProductModal() {
               <Form.Control
                 type="text"
                 placeholder="Enter stock"
-                name="stock"
-                value={formData.stock}
+                name="stockQuantity"
+                value={formData.stockQuantity}
                 onChange={handleInputChange}
               />
             </Form.Group>
@@ -182,12 +190,12 @@ function UpdateProductModal() {
             </Form.Group>
 
             <Form.Group controlId="formImage">
-              <Form.Label>Image:</Form.Label>
+              <Form.Label>imgURL:</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter image URL"
                 name="image"
-                value={formData.image}
+                value={formData.imgURL}
                 onChange={handleInputChange}
               />
             </Form.Group>

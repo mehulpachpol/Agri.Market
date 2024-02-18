@@ -49,14 +49,38 @@ const Login = () => {
         setLoginStatus(false);
       }
       else{
-        if(data.mesg === "Successful Authentication!!!"){
+        if(data.role === "ROLE_CUSTOMER"){
+          
           console.log("Correct credentials");
           toast.success('Login Successfull')
           setLoginStatus(true);
           sessionStorage['role'] = data.role
           sessionStorage['id'] = data.id
+          sessionStorage['token'] = data.jwt
           navigate('/home')
-  
+        }
+        else if(data.role === "ROLE_SELLER"){
+          
+          
+            console.log("Correct credentials");
+            toast.success('Login Successfull')
+            setLoginStatus(true);
+            sessionStorage['role'] = data.role
+            sessionStorage['id'] = data.id
+            sessionStorage['token'] = data.jwt
+            navigate('/seller')
+          
+        }
+        else{
+          
+          console.log("Correct credentials");
+          toast.success('Login Successfull')
+          setLoginStatus(true);
+          sessionStorage['role'] = data.role
+          sessionStorage['id'] = data.id
+          sessionStorage['token'] = data.jwt
+          navigate('/admin')
+
         }
       }
       

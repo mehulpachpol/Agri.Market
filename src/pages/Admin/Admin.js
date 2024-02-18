@@ -5,6 +5,7 @@ import {CategoryScale} from 'chart.js';
 import Chart from 'chart.js/auto';
 import Sidebar from './Sidebar';
 import AddCategoryModal from '../../components/AddCategoryModal';
+import { useEffect , useState } from "react";
 
 
 
@@ -25,13 +26,41 @@ const Admin = () => {
     ],
   };
 
+
+  const [categories, setCategories] = useState([]);
+
+
+
+
+  useEffect(() => {
+    // Fetch categories from the API and update the state
+    const fetchCategories = async () => {
+      try {
+        const apiEndpoint = 'http://localhost:8080/category/all'; // Replace with your actual API endpoint
+        const response = await fetch(apiEndpoint);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(data)
+        setCategories(data); // Assuming the API returns an array of category objects
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+
   const pieChartData = {
-    labels: ['Fertilizers', 'Pesticide', 'Machinery', 'Fungicide', 'Seeds'],
+    
+    labels : categories.map(category => category.categoryName) ,
     datasets: [
       {
-        data: [300, 50, 100, 150, 200],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF9800'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF9800'],
+        data: [300, 50, 100, 150],
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50'],
       },
     ],
   };

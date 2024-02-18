@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
+import { toast } from 'react-toastify'
 
 function AddCategoryModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -35,10 +36,12 @@ function AddCategoryModal() {
             }
             console.log('Response Status:', response.status);
             return response.json();
+           
           })
           .then(data => {
-            console.log(' Category Added successfully:', data);
+            console.log(' Category Added successfully:', data.categoryName);
             // You can perform additional actions after a successful update if needed
+            toast.success("New Category " + data.categoryName + " added")
           })
           .catch(error => {
             console.error('Error updating profile:', error);

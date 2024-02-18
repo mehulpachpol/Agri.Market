@@ -20,14 +20,18 @@ import CustomerAnalytics from './components/CustomerAnalytics';
 import SellerAnalytics from './components/SellerAnalytics';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+//const persistor = persistStore(store);
 root.render(
  
   <BrowserRouter>
  
     <Provider store={store}>
+      
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
@@ -50,6 +54,7 @@ root.render(
         <Route path="/product/*" element={<PageNotFound />} />
       </Routes>
       <ToastContainer/>
+    
 
     </Provider>
   </BrowserRouter>

@@ -16,6 +16,7 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const addProduct = (product) => {
+    console.log("inside addProduct");
     dispatch(addCart(product))
     // console.log(product)
 
@@ -31,11 +32,12 @@ const Products = () => {
 
     try {
       const id = sessionStorage['id']
+      const token = sessionStorage['token']
       const apiEndpoint = `http://localhost:8080/cart/user/${id}/product/${product.id}`;  
       const requestOptions = {
         method: 'POST',  
         headers: {
-          'Content-Type': 'application/json',
+          "Authorization": "Bearer " + token,
         },
       };
 
