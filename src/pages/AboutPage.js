@@ -1,11 +1,18 @@
 import React from 'react'
 import { Footer, Navbar } from "../components";
 import NavbarLogin from '../components/NavbarLogin';
+import NavbarSeller from '../components/NavbarSeller';
 const AboutPage = () => {
   return (
     <>
-        {
-      sessionStorage.getItem('id')!=null?<Navbar/>:<NavbarLogin/>
+         {
+      (sessionStorage.getItem('role')==="ROLE_SELLER") && <NavbarSeller />
+    }
+    {
+      (sessionStorage.getItem('role')==="ROLE_CUSTOMER") && <Navbar />
+    }
+    {
+      (sessionStorage.getItem('role')=== null) && <NavbarLogin />
     }
       {/* <Navbar /> */}
       {/* <NavbarLogin/> */}

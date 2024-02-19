@@ -3,7 +3,7 @@ import {React , useState , useEffect} from 'react';
 import { Container, Row, Col, Card, Image, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom'
 import backgroundImage from '../images/ferti.jpeg'; // Replace with the actual path to your default image
-
+import { MDBCollapse } from 'mdb-react-ui-kit';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -29,6 +29,8 @@ import { Navbar } from '../components';
 import UpdateProfileModal from '../components/UpdateProfileModal';
 
 export const ProfilePage = ()=> {
+  
+ 
 
   const [orderSlide , setOrderSlide] = useState(true);
   const [profileData, setProfileData] = useState({
@@ -150,7 +152,6 @@ export const ProfilePage = ()=> {
   //   fetchData();
   // }, [profileUpdated]);
   
-
   return (
     <>
     <Navbar/>
@@ -260,10 +261,11 @@ export const ProfilePage = ()=> {
               <Card.Title className="mb-4"></Card.Title>
               {orderHistory.map((order, index) => (
                 <Row key={index} className="mb-4 align-items-center">
-                <Col md={4}>
+                  <Col md={3}></Col>
+                {/* <Col md={4}>
                   <img src={order.image || backgroundImage} alt={`Order ${order.orderId}`} className="order-image" />
-                </Col>
-                <Col md={6}>
+                </Col> */}
+                <Col md={7}>
                  <p className="info-label">Order ID: {order.orderId}</p>
                   <p className="info-text">Order Date: {order.date}</p>
                   
@@ -281,6 +283,8 @@ export const ProfilePage = ()=> {
           </Card>
         </Col>
       </Row>
+
+     
     </Container>
     </div>
   </div> 

@@ -24,12 +24,7 @@ import {
   MDBCardImage,
   MDBBtn,
   MDBBreadcrumb,
-  MDBBreadcrumbItem,
-  MDBProgress,
-  MDBProgressBar,
-  MDBIcon,
-  MDBListGroup,
-  MDBListGroupItem
+  
 } from 'mdb-react-ui-kit';
 
 import '../CSS/ProfilePage.css'
@@ -62,6 +57,7 @@ import NavbarSeller from '../components/NavbarSeller';
     lastName: '',
     phoneNo: '',
     dob: '',
+    
     address: {
       streetAddress: '',
       city: '',
@@ -71,28 +67,7 @@ import NavbarSeller from '../components/NavbarSeller';
     },
   });
 
-  // const useStyles = makeStyles((theme) => ({
-  //   modal: {
-  //     display: 'flex',
-  //     alignItems: 'center',
-  //     justifyContent: 'center',
-  //   },
-  //   paper: {
-  //     backgroundColor: theme.palette.background.paper,
-  //     border: '2px solid #000',
-  //     boxShadow: theme.shadows[5],
-  //     padding: theme.spacing(2, 4, 3),
-  //   },
-  //   backdrop: {
-  //     backdropFilter: 'blur(4px)',
-  //   },
-  //   form: {
-  //     display: 'flex',
-  //     flexDirection: 'column',
-  //     gap: theme.spacing(2),
-  //   },
-  // }));
-
+ 
   const [orderSlide , setOrderSlide] = useState(false);
   const [open, setOpen] = useState(false);
 

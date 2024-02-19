@@ -2,7 +2,10 @@ import React from "react";
 import { Footer, Navbar } from "../components";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import {  useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
 const Checkout = () => {
+  const navigate = useNavigate()
   const state = useSelector((state) => state.handleCart);
 
   const EmptyCart = () => {
@@ -18,6 +21,44 @@ const Checkout = () => {
         </div>
       </div>
     );
+  };
+
+  const placeOrder=()=>{
+    const id = sessionStorage['id']
+    const apiEndpoint = `http://localhost:8080/order/placeproduct/${id}`;
+      
+        // Prepare the request payload
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+         
+        };
+      
+        // Make the API call
+        fetch(apiEndpoint, requestOptions)
+          .then(response => {
+            if (!response.ok) {
+              console.log("Inside Not ok");
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            console.log('Response Status:', response.status);
+            return response.json();
+           
+          })
+          .then(data => {
+            console.log(' Order Placed');
+            // You can perform additional actions after a successful update if needed
+            toast.success("Order Placed")
+            navigate('/home')
+          })
+          .catch(error => {
+            console.error('Error placing order:', error);
+            // Handle error scenarios
+          });
+      
+
   };
 
   const ShowCheckout = () => {
@@ -269,7 +310,7 @@ const Checkout = () => {
 
                     <button
                       className="w-100 btn btn-primary "
-                      type="submit" disabled
+                      type="submit" onClick={placeOrder}
                     >
                       Continue to checkout
                     </button>

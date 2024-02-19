@@ -17,20 +17,20 @@ const Cart = () => {
   const dispatch = useDispatch();
 
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:8080/cart/user/1'); // Replace with your API endpoint
-  //       setDataArray(response.data);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/cart/user/${sessionStorage.getItem('id')}`); // Replace with your API endpoint
+        setDataArray(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-  //   fetchData(); 
-  //   return () => {
-  //   };
-  // }, []);
+    fetchData(); 
+    return () => {
+    };
+  }, []);
 
 
   // useEffect(() => {

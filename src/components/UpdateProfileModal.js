@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+
 
 function UpdateProfileModal() {
+  console.log("Inside update");
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -16,6 +19,9 @@ function UpdateProfileModal() {
       country: '',
     },
   });
+
+  const navigate = useNavigate()
+
 
 
   useEffect(() => {
@@ -40,28 +46,6 @@ function UpdateProfileModal() {
   }, []);
 
 
-
-
-
-
-
-
-  // {
-  //   "userName": "Swaminathan",
-  //   "email": "Ms@gmail.com",
-  //   "firstName": "Murli",
-  //   "lastName": "Swaminathan",
-  //   "phoneNo": "9867564531",
-  //   "dob": "2024-02-10",
-  //   "address": {
-  //     "streetAddress": "LinkStreet",
-  //     "city": "Pune",
-  //     "state": "MH",
-  //     "zipCode": "411057",
-  //     "country": "India"
-  //   }
-  // }
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -85,7 +69,8 @@ function UpdateProfileModal() {
   };
 
   const handleUpdate = () => {
-    const apiEndpoint = 'http://localhost:8080/customer/profileUpdate/1';
+    const id = sessionStorage['id']
+    const apiEndpoint = `http://localhost:8080/customer/profileUpdate/${id}`;
     let a =9;
   
     // Prepare the request payload
@@ -121,7 +106,8 @@ function UpdateProfileModal() {
     console.log(formData);
     setFormData(formData);
     console.log(formData);
-    window.location.reload();
+    navigate('/profile');
+    // window.location.reload();
   
     // onUpdate(a+1);
 

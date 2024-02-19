@@ -1,12 +1,23 @@
 import React from "react";
 import { Footer, Navbar } from "../components";
 import NavbarLogin from "../components/NavbarLogin";
+import NavbarSeller from "../components/NavbarSeller";
 const ContactPage = () => {
   return (
     <>
 
+    {/* {
+      (sessionStorage.getItem('role')==="ROLE_SELLER" || sessionStorage.getItem('role')==="ROLE_CUSTOMER")?(sessionStorage.getItem('role')==="ROLE_SELLER"):<Navbar/>:<NavbarLogin/>
+    } */}
+
     {
-      sessionStorage.getItem('id')!=null?<Navbar/>:<NavbarLogin/>
+      (sessionStorage.getItem('role')==="ROLE_SELLER") && <NavbarSeller />
+    }
+    {
+      (sessionStorage.getItem('role')==="ROLE_CUSTOMER") && <Navbar />
+    }
+    {
+      (sessionStorage.getItem('role')=== null) && <NavbarLogin />
     }
       {/* <Navbar /> */}
       {/* <NavbarLogin/> */}
