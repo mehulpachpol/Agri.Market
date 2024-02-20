@@ -19,6 +19,7 @@ const Products = () => {
     console.log("inside addProduct");
     dispatch(addCart(product))
     // console.log(product)
+    console.log(product);
 
     handleSubmit(product);
 
@@ -213,9 +214,9 @@ const Products = () => {
                     <li className="list-group-item">Vestibulum at eros</li> */}
                 </ul>
                 <div className="card-body">
-                  <Link to={"/product/" + product.id} className="btn btn-dark m-1">
+                  {/* <Link to={"/product/" + product.id} className="btn btn-dark m-1">
                     Buy Now
-                  </Link>
+                  </Link> */}
                   <button className="btn btn-dark m-1" onClick={() => addProduct(product)}>
                     Add to Cart
                   </button>

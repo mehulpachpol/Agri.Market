@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Footer, Navbar } from '../components';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify'
 import NavbarLogin from '../components/NavbarLogin';
+import { useDispatch } from 'react-redux';
+import { getCartData } from '../redux/action/cartAction';
 
 
 const Login = () => {
@@ -11,7 +13,7 @@ const Login = () => {
   const [loginStatus , setLoginStatus] = useState(false);
 
   const navigate = useNavigate()
-
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

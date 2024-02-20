@@ -58,7 +58,7 @@ const Admin = () => {
     labels : categories.map(category => category.categoryName) ,
     datasets: [
       {
-        data: [300, 50, 100, 150],
+        data: [3, 5, 4, 2],
         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50'],
         hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50'],
       },

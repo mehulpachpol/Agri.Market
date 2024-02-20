@@ -1,35 +1,36 @@
 import React from "react";
 import { Footer, Navbar } from "../components";
 import { useSelector, useDispatch } from "react-redux";
-import { addCart, delCart} from "../redux/action";
+import { addCart, delCart } from "../redux/action/cartAction";
 import { Link } from "react-router-dom";
-import { useEffect , useState } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
-import {persistor} from '../redux/store';
+import { persistor } from '../redux/store';
 
 
 
 const Cart = () => {
   const [dataArray, setDataArray] = useState([]);
 
-  const state = useSelector((state) => state.handleCart);
- // const state = persistor.getState();
+  
+  // const state = persistor.getState();
   const dispatch = useDispatch();
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/cart/user/${sessionStorage.getItem('id')}`); // Replace with your API endpoint
-        setDataArray(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await axios.get(`http://localhost:8080/cart/user/${sessionStorage.getItem('id')}`); // Replace with your API endpoint
+    //     setDataArray(response.data);
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //   }
+    // };
 
-    fetchData(); 
-    return () => {
-    };
+    // fetchData(); 
+    // return () => {
+    // };
+
   }, []);
 
 
@@ -60,8 +61,9 @@ const Cart = () => {
 
   const addItem = (product) => {
     dispatch(addCart(product));
+    console.log("Item added");
   };
-  
+
   const removeItem = (product) => {
     dispatch(delCart(product));
   };
@@ -70,17 +72,23 @@ const Cart = () => {
   //   dispatch(fillCart(productList));
   // };
 
+  const state = useSelector((state) => state.cart);
+  let cartArr = state.response;
+  console.log(cartArr);
+
   const ShowCart = () => {
     let subtotal = 0;
     let shipping = 30.0;
     let totalItems = 0;
-    state.map((item) => {
-      return (subtotal += item.price * item.qty);
+    cartArr && cartArr.map((item) => {
+      return (subtotal += item.price * item.quantity);
     });
 
-    state.map((item) => {
-      return (totalItems += item.qty);
+    cartArr && cartArr.map((item) => {
+      return (totalItems += item.quantity);
     });
+
+   
     return (
       <>
         <section className="h-100 gradient-custom">
@@ -92,7 +100,7 @@ const Cart = () => {
                     <h5 className="mb-0">Item List</h5>
                   </div>
                   <div className="card-body">
-                    {state.map((item) => {
+                    {cartArr && cartArr.map((item) => {
                       return (
                         <div key={item.id}>
                           <div className="row d-flex align-items-center">
@@ -133,7 +141,7 @@ const Cart = () => {
                                   <i className="fas fa-minus"></i>
                                 </button>
 
-                                <p className="mx-5">{item.qty}</p>
+                                <p className="mx-5">{item.quantity}</p>
 
                                 <button
                                   className="btn px-3"
@@ -147,7 +155,7 @@ const Cart = () => {
 
                               <p className="text-start text-md-center">
                                 <strong>
-                                  <span className="text-muted">{item.qty}</span>{" "}
+                                  <span className="text-muted">{item.quantity}</span>{" "}
                                   x ₹{item.price}
                                 </strong>
                               </p>
@@ -207,7 +215,8 @@ const Cart = () => {
       <div className="container my-3 py-3">
         <h1 className="text-center">Cart</h1>
         <hr />
-        {state.length > 0 ? <ShowCart /> : <EmptyCart />}
+        <ShowCart />
+        {/* {state.length < 0 ? <ShowCart /> : <EmptyCart />} */}
       </div>
       <Footer />
     </>

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addCart } from "../redux/action";
 
 import { Footer, Navbar } from "../components";
+import { addCartData } from "../redux/action/cartAction";
 
 const Product = () => {
   const { id } = useParams();
@@ -16,8 +17,12 @@ const Product = () => {
 
   const dispatch = useDispatch();
 
+  const uid = sessionStorage.getItem("id");
+
   const addProduct = (product) => {
-    dispatch(addCart(product));
+    //dispatch(addCart(product));
+
+    dispatch(addCartData(uid, product.id))
   };
 
   useEffect(() => {
@@ -150,12 +155,12 @@ const Product = () => {
                     <li className="list-group-item lead">${product.price}</li>
                   </ul> */}
                   <div className="card-body">
-                    <Link
+                    {/* <Link
                       to={"/product/" + item.id}
                       className="btn btn-dark m-1"
                     >
                       Buy Now
-                    </Link>
+                    </Link> */}
                     <button
                       className="btn btn-dark m-1"
                       onClick={() => addProduct(item)}
