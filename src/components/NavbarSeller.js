@@ -44,6 +44,9 @@ const NavbarSeller = () => {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/contact">Contact</NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/selleranalytics">Analytics</NavLink>
+                        </li>
                         {/* <li className="nav-item">
                             <NavLink className="nav-link" to="/seller">Sellers Zone</NavLink>
                         </li>

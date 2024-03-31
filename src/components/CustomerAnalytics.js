@@ -14,8 +14,8 @@ const CustomerAnalytics = () => {
   const analyticsData = {
     totalCustomers: custCount,
     totalOrders: orderCount,
-    uniqueVisitors: 1500,
-    customerWithHighestOrders: 'Ritesh Parkhad',
+    uniqueVisitors: 6,
+    customerWithHighestOrders: 'Ramesh',
   };
 
 

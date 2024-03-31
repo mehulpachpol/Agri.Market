@@ -14,7 +14,7 @@ const Checkout = () => {
         <div className="row">
           <div className="col-md-12 py-5 bg-light text-center">
             <h4 className="p-3 display-5">No item in Cart</h4>
-            <Link to="/" className="btn btn-outline-dark mx-4">
+            <Link to="/product" className="btn btn-outline-dark mx-4">
               <i className="fa fa-arrow-left"></i> Continue Shopping
             </Link>
           </div>
@@ -51,7 +51,6 @@ const Checkout = () => {
             console.log(' Order Placed');
             // You can perform additional actions after a successful update if needed
             toast.success("Order Placed")
-            navigate('/home')
           })
           .catch(error => {
             console.error('Error placing order:', error);
@@ -108,7 +107,7 @@ const Checkout = () => {
                   <h4 className="mb-0">Billing address</h4>
                 </div>
                 <div className="card-body">
-                  <form className="needs-validation" novalidate>
+                  <form className="needs-validation"  novalidate>
                     <div className="row g-3">
                       <div className="col-sm-6 my-1">
                         <label for="firstName" className="form-label">

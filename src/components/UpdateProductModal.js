@@ -103,6 +103,7 @@ function UpdateProductModal(props) {
 
     // Close modal
     setOpenModal(false);
+    window.location.reload();
   };
 
 

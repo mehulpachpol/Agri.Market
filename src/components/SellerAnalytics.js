@@ -12,10 +12,10 @@ const SellerAnalytics = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
   const analyticsData = {
-    totalCustomers: 1000,
-    totalOrders: 5000,
-    uniqueVisitors: 1500,
-    customerWithHighestOrders: 'Ritesh Singh',
+    totalCustomers: 4,
+    totalOrders: 21,
+    uniqueVisitors: 7,
+    customerWithHighestOrders: 'Akshat',
   };
 
   const handleItemClick = (index) => {
@@ -118,7 +118,7 @@ const SellerAnalytics = () => {
           <Row>
             <Col md={4}>
               <ListGroup>
-                <ListGroup.Item variant="info">Customer List</ListGroup.Item>
+                <ListGroup.Item variant="info">Seller List</ListGroup.Item>
                 {customerList.map((customer, index) => (
                   <ListGroup.Item key={index} onClick={() => handleItemClick(index)}>
                     {customer}

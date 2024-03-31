@@ -167,28 +167,6 @@ const Products = () => {
 
 
 
-        {/* <div className="buttons text-center py-5">
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => setFilter(data)}>All</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("men's clothing")}>Men's Clothing</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("women's clothing")}>
-            Women's Clothing
-          </button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("jewelery")}>Jewelery</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("electronics")}>Electronics</button>
-        </div> */}
-{/* 
-[
-  {
-    "id": 0,
-    "productName": "string",
-    "description": "string",
-    "price": 0,
-    "stockQuantity": 0,
-    "imgURL": "string",
-    "dateAdded": "2024-02-10"
-  }
-] */}
-
         {filter.map((product) => {
           return (
             <div id={product.id} key={product.id} className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">

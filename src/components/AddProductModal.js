@@ -89,6 +89,8 @@ function AddProductModal() {
 
     // Close modal
     setOpenModal(false);
+    window.location.reload();
+
   };
 
 

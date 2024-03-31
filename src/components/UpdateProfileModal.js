@@ -107,7 +107,7 @@ function UpdateProfileModal() {
     setFormData(formData);
     console.log(formData);
     navigate('/profile');
-    // window.location.reload();
+    window.location.reload();
   
     // onUpdate(a+1);
 

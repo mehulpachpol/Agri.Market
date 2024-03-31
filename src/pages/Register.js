@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Footer, Navbar } from '../components';
 import { Link } from 'react-router-dom';
 import NavbarLogin from '../components/NavbarLogin';
+import { toast } from 'react-toastify'
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -24,6 +25,37 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
+    if(userName.length == 0){
+      toast.error("Please Enter UserName");
+      return;
+    }
+
+    if(email.length == 0){
+      toast.error("Please Enter Email");
+      return;
+    }
+  
+    // Basic password length validation
+    if (password.length < 8) {
+      toast.error('Password should be at least 8 characters long');
+      return;
+    }
+  
+    // Regular expression to check for special characters
+    const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+  
+    if (!specialCharacterRegex.test(password)) {
+      toast.error('Password should contain at least one special character');
+      return;
+    }
+
+    if(role === ""){
+      toast.error('Please Select a Role');
+      return;
+
+    }
+  
     try {
       const apiEndpoint = 'http://localhost:8080/customer/register';  
       const requestOptions = {
@@ -33,16 +65,18 @@ const Register = () => {
         },
         body: JSON.stringify(formData),
       };
-
+  
       const response = await fetch(apiEndpoint, requestOptions);
-
+  
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+  
       const data = await response.json();
       console.log('Data saved successfully:', data);
+      toast.success('User Registered Successfully');
 
+  
       setFormData({
         userName: '',
         email: '',
@@ -53,6 +87,7 @@ const Register = () => {
       console.error('Error saving data:', error);
     }
   };
+  
 
   return (
     <>

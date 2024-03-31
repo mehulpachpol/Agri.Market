@@ -8,11 +8,11 @@ import {persistor} from '../redux/store';
  
 const Navbar = () => {
     const navigate = useNavigate()
-//     const state = useSelector(state => state.handleCart)
+    const state = useSelector(state => state.handleCart)
 //    // const state = persistor.getState();
 //     console.log(state)
-    const state = useSelector((state) => state.cart);
-    let cartArr = state.response;
+    // const state = useSelector((state) => state.cart);
+    // let cartArr = state.response;
 
 
     const handleClearSessionStorage = () => {
@@ -50,6 +50,9 @@ const Navbar = () => {
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/contact">Contact</NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/weather">Weather</NavLink>
+                        </li>
                         {/* <li className="nav-item">
                             <NavLink className="nav-link" to="/seller">Sellers Zone</NavLink>
                         </li>
@@ -60,7 +63,7 @@ const Navbar = () => {
                     <div className="buttons text-center">
                         {/* <NavLink to="/login" className="btn btn-outline-dark m-2"><i className="fa fa-sign-in-alt mr-1"></i> Login</NavLink>
                         <NavLink to="/register" className="btn btn-outline-dark m-2"><i className="fa fa-user-plus mr-1"></i> Register</NavLink> */}
-                        <NavLink to="/cart" className="btn btn-outline-dark m-2"><i className="fa fa-cart-shopping mr-1"></i> Cart () </NavLink>
+                        <NavLink to="/cart" className="btn btn-outline-dark m-2"><i className="fa fa-cart-shopping mr-1"></i> Cart ({state.length}) </NavLink>
 
                         <NavLink to="/profile" className="btn btn-outline-dark m-2"><i className="fa fa-user-plus mr-1"></i> Profile</NavLink>
                         <NavLink onClick={handleClearSessionStorage} to="/"  className="btn btn-outline-danger m-2"><i className="fa fa-user-exit mr-1"></i> Log Out</NavLink>

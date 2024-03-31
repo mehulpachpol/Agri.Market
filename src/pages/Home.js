@@ -7,16 +7,16 @@ import { getCartData } from "../redux/action/cartAction";
 
 function Home() {
 
-  const dispatch = useDispatch()
-  let id = sessionStorage.getItem("id")
-  console.log(id);
+  // const dispatch = useDispatch()
+  // let id = sessionStorage.getItem("id")
+  // console.log(id);
 
-  const cartData = useSelector(state => state.cart)
-  const carts = cartData.response;
+  // const cartData = useSelector(state => state.cart)
+  // const carts = cartData.response;
 
-  useEffect(() => {
-    dispatch(getCartData(id))
-  }, [])
+  // useEffect(() => {
+  //   dispatch(getCartData(id))
+  // }, [])
  
 
   const [loggedIn , setLoggedIn] = useState(false);

@@ -164,6 +164,7 @@ import NavbarSeller from '../components/NavbarSeller';
   const handleDelete = async (productId) => {
     try {
       const apiEndpoint = `http://localhost:8080/product/${productId}`;
+      console.log(apiEndpoint);
   
       const requestOptions = {
         method: 'DELETE',
@@ -183,6 +184,7 @@ import NavbarSeller from '../components/NavbarSeller';
       console.log(productDelete);
       toast.info(`Product  deleted successfully`)
       setProductDelete(1);
+      window.location.reload();
   
       // You can perform additional actions after a successful delete if needed
     } catch (error) {

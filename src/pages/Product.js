@@ -20,9 +20,9 @@ const Product = () => {
   const uid = sessionStorage.getItem("id");
 
   const addProduct = (product) => {
-    //dispatch(addCart(product));
+    dispatch(addCart(product));
 
-    dispatch(addCartData(uid, product.id))
+    // dispatch(addCartData(uid, product.id))
   };
 
   useEffect(() => {

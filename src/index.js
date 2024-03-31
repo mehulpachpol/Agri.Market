@@ -22,6 +22,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import SellerAnalytic from './pages/SellerAnalytic';
+import WeatherApp from './components/Weatherapp';
 
 
 
@@ -51,6 +53,11 @@ root.render(
         <Route path="admin/customeranalytics" element={<CustomerAnalytics/>}></Route>
         <Route path="admin/selleranalytics" element={<SellerAnalytics/>}></Route>
         <Route path="admin/adminanalytics" element={<AnalyticsAdmin/>}></Route>
+        <Route path="selleranalytics" element={<SellerAnalytic/>}></Route>
+        <Route path="weather" element={<WeatherApp/>}></Route>
+
+
+
 
         <Route path="*" element={<PageNotFound />} />
         <Route path="/product/*" element={<PageNotFound />} />
